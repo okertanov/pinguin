@@ -1,5 +1,8 @@
 #!/bin/bash
 
+##    Copyright (C) 2012 Oleg Kertanov <okertanov@gmail.com>
+##    All rights reserved.
+
 set -e -u
 
 BDEVICE=/dev/sdb1
@@ -21,6 +24,10 @@ if [ "$(\id -u)" -ne "0" ]; then
    exit 1
 fi
 
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo "WARNING! It will erase your /dev/sdb (which is SD card on my system) so press Ctrl-C NOW to prevent this!"
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+sleep 10
 echo "Starting..."
 
 ls /mnt
@@ -68,35 +75,5 @@ sync
 umount $BDEVICE
 umount $RDEVICE
 
-echo
-echo Launch QEMU with the SD image:
-echo
-echo qemu-system-arm -M versatilepb -cpu arm1136-r2 -hda /dev/sdb -kernel ~/Downloads/zImage-devtmpfs -m 192 -append "root=/dev/sda2 init=/bin/bash" -vga std -net nic -net user
-echo qemu-system-arm -M versatilepb -cpu arm1136-r2 -hda /dev/sdb -kernel ~/Downloads/zImage-devtmpfs -m 192 -append "root=/dev/sda2" -vga std -net nic -net user
-echo
-
-echo
-echo Run thin on the target device:
-echo
-echo mount -oremount,rw /dev/sda2 /
-echo /debootstrap/debootstrap --second-stage
-echo "aptitude update && aptitude dist-upgrade"
-echo aptitude install -f
-echo "aptitude clean && aptitude autoclean"
-echo
-
-echo
-echo Other tasks to perform on the target:
-echo
-echo dpkg-reconfigure locales
-echo dpkg-reconfigure tzdata
-echo adduser pi
-echo update-alternatives --config editor
-echo update-rc.d ssh  defaults
-echo update-rc.d cron remove
-echo TODO: Update firmware and kernel
-echo TODO: Copy kernel modules to /lib/modules
-echo
-
-echo "Done."
+echo "Done. See README.md for the post-config instructions."
 
