@@ -113,6 +113,8 @@ Links
 
 [Linaro - Open source software for ARM SoCs](http://www.linaro.org/)
 
+[Linaro - low-cost development boards](http://www.linaro.org/engineering/getting-started/low-cost-development-boards)
+
 [OpenEmbedded BSP layer for the Raspberry Pi](https://github.com/djwillis/meta-raspberrypi)
 
 [Qt Embedded](http://qt-project.org/wiki/Support_for_Embedded_Linux)
