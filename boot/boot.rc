@@ -1,0 +1,10 @@
+#!/bin/sh -e
+#
+# boot.rc
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+exit 0
