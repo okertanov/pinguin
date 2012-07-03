@@ -16,14 +16,14 @@
 boot_delay=0
 
 # Alternative name to use when loading kernel
-# kernel=path
+#kernel=path
 
 #
 # Overclocking options
 #
 
 # Initial emmc clock. Default 50000000
-init_emmc_clock=100000000
+#init_emmc_clock=100000000
 
 # Frequency of SDRAM in MHz. Default 400.
 sdram_freq=500
