@@ -64,7 +64,7 @@ And then:
     qemu-system-arm -M versatilepb -cpu arm1136-r2 -hda /dev/sdb -kernel emulation/zImage-devtmpfs -m 192 -append "root=/dev/sda2" -vga std -net nic -net user
 
 ### Post-config
-Run thin on the target device:
+#### Run thin on the target device:
 
     mount -oremount,rw /dev/sda2 /
     /debootstrap/debootstrap --second-stage
@@ -73,18 +73,31 @@ Run thin on the target device:
     aptitude install -f
     aptitude clean && aptitude autoclean
 
-Other tasks to perform on the target:
+#### Other tasks to perform on the target:
 
     dpkg-reconfigure locales
     dpkg-reconfigure tzdata
+    dpkg-reconfigure console-data
     dpkg-reconfigure keyboard-configuration
+
+    tasksel install standard
 
     adduser pi
     update-alternatives --config editor
     update-rc.d ssh  defaults
     update-rc.d cron remove
 
-TODO: Update firmware, kernel and kernel modules to /lib/modules
+#### Firmware, kernel and kernel modules
+@see https://github.com/raspberrypi/firmware
+
+    cp ./boot/*.elf  /mnt/raspiboot/
+    cp ./boot/*.bin  /mnt/raspiboot/
+    cp ./boot/*.img  /mnt/raspiboot/
+    cp ./boot/cmdline.txt  /mnt/raspiboot/
+    cp ./boot/config.txt   /mnt/raspiboot/
+    cp ./boot/boot.rc      /mnt/raspiboot/
+
+#### Broadcom VC
 
 
 Links

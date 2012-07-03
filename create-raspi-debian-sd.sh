@@ -11,8 +11,8 @@ RDEVICE=/dev/sdb2
 BMOUNT=/mnt/piboot
 RMOUNT=/mnt/piroot
 
-ADDITIONAL1="netbase,net-tools,ifupdown,iproute,openssh-server,ntpdate"
-ADDITIONAL2="vim-nox,less,sudo,locales"
+ADDITIONAL1="netbase,net-tools,ifupdown,iproute,openssh-server,ntp,ntpdate"
+ADDITIONAL2="vim-nox,less,sudo,tzdata,console-data,locales,tasksel"
 ADDITIONAL3="x-window-system-core,fluxbox"
 ADDITIONAL="$ADDITIONAL1,$ADDITIONAL2,$ADDITIONAL3"
 

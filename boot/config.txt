@@ -1,0 +1,73 @@
+#
+# Raspberry Pi boot configuration
+#
+# @see http://elinux.org/R-Pi_ConfigurationFile
+#      and
+#      http://elinux.org/RPi_config.txt
+#      and
+#      http://elinux.org/R-Pi_Troubleshooting
+#
+
+#
+# Platform and kernel parameters
+#
+
+# Wait for given number of seconds in start.elf before loading kernel.img
+boot_delay=0
+
+# Alternative name to use when loading kernel
+# kernel=path
+
+#
+# Overclocking options
+#
+
+# Initial emmc clock. Default 50000000
+init_emmc_clock=100000000
+
+# Frequency of SDRAM in MHz. Default 400.
+sdram_freq=500
+
+# Frequency of ARM in MHz. Default 700.
+#arm_freq=900
+
+# Sets core_freq, h264_freq, isp_freq, v3d_freq together.
+#gpu_freq=350
+
+# Frequency of GPU processor core in MHz. Default 250.
+#core_freq=350
+
+# Frequency of hardware video block in MHz. Default 250.
+#h264_freq=350
+
+# Frequency of image sensor pipeline block in MHz. Default 250.
+#isp_freq=350
+
+# Frequency of 3D block in MHz. Default 250.
+#v3d_freq=350
+
+#
+# Video/Audio Parameters
+#
+
+# Set monitor mode to DMT
+hdmi_group=2
+
+# The signal strength of the HDMI interface (o is default, 7 is max)
+config_hdmi_boost=4
+
+# Override the normal selection of composite if no HDMI is detected
+hdmi_force_hotplug=1
+
+# Disable hdmi overscan
+disable_overscan=1
+
+# Force the monitor to HDMI mode so that sound will be sent over HDMI cable
+hdmi_drive=2
+
+# Set stdv mode to European PAL
+sdtv_mode=2
+
+# Define 4:3 the aspect ratio for composite output
+sdtv_aspect=1
+
