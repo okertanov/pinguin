@@ -102,10 +102,6 @@ And then:
     cp ./boot/boot.rc      /mnt/raspiboot/
 
 #### Broadcom VC
-    vim /etc/modules or modules.d...
-        vchiq
-        snd_bcm2835
-
     See http://unicorn.drogon.net/vchiq
         http://elinux.org/Omxplayer
 
