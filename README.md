@@ -102,6 +102,11 @@ And then:
     cp ./boot/boot.rc      /mnt/raspiboot/
 
 #### Broadcom VC
+    sudo /opt/vc/sbin/install_vmcs
+    sudo update-rc.d vchiq defaults
+    sudo update-rc.d vcfiled defaults
+    /opt/vc/bin/vcgencmd version
+
     See http://unicorn.drogon.net/vchiq
         http://elinux.org/Omxplayer
 
