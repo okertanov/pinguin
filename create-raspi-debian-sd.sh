@@ -12,7 +12,7 @@ BMOUNT=/mnt/piboot
 RMOUNT=/mnt/piroot
 
 ADDITIONAL1="netbase,net-tools,ifupdown,iproute,openssh-server,ntp,ntpdate"
-ADDITIONAL2="vim-nox,less,sudo,tzdata,console-data,locales,tasksel"
+ADDITIONAL2="vim-nox,less,sudo,tzdata,console-data,locales,tasksel,ca-certificates"
 ADDITIONAL3="x-window-system-core,fluxbox"
 ADDITIONAL="$ADDITIONAL1,$ADDITIONAL2,$ADDITIONAL3"
 
@@ -69,6 +69,7 @@ cp ./etc/resolv.conf  $RMOUNT/etc/
 cp ./etc/fstab        $RMOUNT/etc/
 cp ./etc/network/interfaces $RMOUNT/etc/network/
 cp ./etc/apt/sources.list   $RMOUNT/etc/apt/
+cp ./etc/init.d/vchiq $RMOUNT/etc/init.d/
 
 sync
 

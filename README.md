@@ -98,7 +98,12 @@ And then:
     cp ./boot/boot.rc      /mnt/raspiboot/
 
 #### Broadcom VC
+    vim /etc/modules or modules.d...
+        vchiq
+        snd_bcm2835
 
+    See http://unicorn.drogon.net/vchiq
+        http://elinux.org/Omxplayer
 
 Links
 -----
@@ -109,6 +114,8 @@ Links
 [elinux.org/R-Pi_Hub](http://elinux.org/R-Pi_Hub)
 
 [elinux.org/RPi_Advanced_Setup](http://elinux.org/RPi_Advanced_Setup)
+
+[http://elinux.org/RPi_Hardware](http://elinux.org/RPi_Hardware)
 
 [github.com/raspberrypi](https://github.com/raspberrypi)
 
