@@ -73,6 +73,10 @@ And then:
     aptitude install -f
     aptitude clean && aptitude autoclean
 
+    vim /etc/inittab
+        #Spawn a getty on Raspberry Pi serial line
+        T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100
+
 #### Other tasks to perform on the target:
 
     dpkg-reconfigure locales
@@ -105,6 +109,8 @@ And then:
     See http://unicorn.drogon.net/vchiq
         http://elinux.org/Omxplayer
 
+#### Root /sd mountpoint
+
 Links
 -----
 [raspberrypi.org](http://www.raspberrypi.org/)
@@ -120,6 +126,8 @@ Links
 [github.com/raspberrypi](https://github.com/raspberrypi)
 
 [github.com/Hexxeh/rpi-firmware](https://github.com/Hexxeh/rpi-firmware)
+
+[github.com/asb/spindle](https://github.com/asb/spindle)
 
 [raspbian.org](http://www.raspbian.org/)
 
