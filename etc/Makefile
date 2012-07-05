@@ -12,13 +12,13 @@ FILES=  fstab                               \
         hosts                               \
         rc.local                            \
         resolv.conf                         \
+        modules                             \
         init.d/vcfiled                      \
         init.d/vchiq                        \
         network/interfaces                  \
         sysctl.d/raspi.conf                 \
         ld.so.conf.d/vmcs.conf              \
         modprobe.d/raspi-blacklist.conf     \
-        modprobe.d/raspi.conf               \
         apt/sources.list                    \
         apt/sources.list.d/qt5pi.list       \
         apt/sources.list.d/raspbian.list    \
