@@ -42,7 +42,7 @@ MARCH:=$(MARCH_ARMV6)
 endif
 
 COMMON_CFLAGS=-Wall -Wextra -Wcast-align -Wundef -pipe -fno-common -fomit-frame-pointer \
-              -I$(./) -D_GNU_SOURCE -D_REENTRANT
+              -I./ -D_GNU_SOURCE -D_REENTRANT
 
 C_CFLAGS=$(COMMON_CFLAGS) $(MARCH) -static -O3
 CXX_CFLAGS=$(COMMON_CFLAGS) $(MARCH) -static -O3
