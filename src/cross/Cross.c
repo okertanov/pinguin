@@ -60,6 +60,10 @@ char* get_platform_signature_posix()
             {
                 return buff;
             }
+            else
+            {
+                free(buff);
+            }
         }
     }
 
@@ -105,6 +109,10 @@ char* get_platform_signature_windows()
             {
                 return buff;
             }
+            else
+            {
+                free(buff);
+            }
         }
     }
 
@@ -129,7 +137,7 @@ int main(int argc, char** argv)
     char* const exec_name = strdup(argv[0]);
     char* const plat_info = get_platform_signature();
 
-    if ( plat_info && exec_name )
+    if ( plat_info && strlen(plat_info) && exec_name )
     {
         fprintf( stdout,
                  out_fmt, exec_name, exec_pcount,
