@@ -47,6 +47,7 @@
 #include <string.h>
 #include <time.h>
 #include <fcntl.h>
+#include <sys/time.h>
 #include <sys/mman.h>
 
 #include "wiringPi.h"
@@ -150,7 +151,7 @@ static int pinToGpio [] =
   17, 18, 21, 22, 23, 24, 25, 4,	// From the Original Wiki - GPIO 0 through 7
    0,  1,				// I2C  - SDA0, SCL0
    8,  7,				// SPI  - CE1, CE0
-  10,  9, 11, 				// SPI  - MISO, MOSI, SCLK
+  10,  9, 11, 				// SPI  - MOSI, MISO, SCLK
   14, 15,				// UART - Tx, Rx
 } ;
 
@@ -244,6 +245,10 @@ static uint8_t gpioToPwmPort [] =
 } ;
 
 
+// Time for easy calculations
+
+static unsigned long long epoch ;
+
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -269,6 +274,7 @@ int wiringPiSetup (void)
 {
   int      fd ;
   uint8_t *gpioMem, *pwmMem, *clkMem ;
+  struct timeval tv ;
 
 #ifdef	DEBUG_PADS
   uint8_t *gpioMem, *padsMem, *pwmMem, *clkMem ;
@@ -372,6 +378,9 @@ int wiringPiSetup (void)
 //  *(pads + 11) = 0x1F ;
   printf ("%08X %08X %08X\n", *(pads + 11), *(pads + 12), *(pads + 13)) ;
 #endif
+
+  gettimeofday (&tv, NULL) ;
+  epoch = (tv.tv_sec * 1000000 + tv.tv_usec) / 1000 ;
 
   return 0 ;
 }
@@ -584,4 +593,22 @@ void delayMicroseconds (unsigned int howLong)
   sleeper.tv_nsec = (long)(howLong * 1000) ;
 
   nanosleep (&sleeper, &dummy) ;
+}
+
+/*
+ * millis:
+ *	Return a number of milliseconds as an unsigned int.
+ *********************************************************************************
+ */
+
+unsigned int millis (void)
+{
+  struct timeval tv ;
+  unsigned long long t1 ;
+
+  gettimeofday (&tv, NULL) ;
+
+  t1 = (tv.tv_sec * 1000000 + tv.tv_usec) / 1000 ;
+
+  return (uint32_t)(t1 - epoch) ;
 }

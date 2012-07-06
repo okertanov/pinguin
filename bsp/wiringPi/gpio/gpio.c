@@ -40,54 +40,94 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-#ifndef TRUE
-#define	TRUE (1==1)
-#define	FALSE (1==2)
-#endif
+static int wpMode ;
 
 
-static char *usage = "Usage: gpio [-g] <read/write/pwm/mode> ..." ;
-
-static int gpioMode = FALSE ;
+char *usage = "Usage: gpio [-g] <read/write/pwm/mode> ..." ;
 
 /*
- * pinCheck:
- *	Just to be safe
+ * doExport:
+ *	gpio export pin mode
+ *	This uses the /sys/class/gpio device interface.
  *********************************************************************************
  */
 
-static int validGpioPins [] =
+void doExport (int argc, char *argv [])
 {
-//  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-    1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1
-} ;
+  FILE *fd ;
+  int pin ;
+  char *mode ;
+  char fName [128] ;
 
-static void pinCheck (int pin)
-{
-  if (gpioMode)
+  if (argc != 4)
   {
-    if ((pin < 0) || (pin > 25))
-    {
-      fprintf (stderr, "GPIO Pin number %d out of range\n", pin) ;
-      exit (1) ;
-    }
-    if (validGpioPins [pin] == 0)
-    {
-      fprintf (stderr, "Not a usable GPIO Pin: %d \n", pin) ;
-      exit (1) ;
-    }
-
+    fprintf (stderr, "Usage: %s export pin mode\n", argv [0]) ;
+    exit (1) ;
   }
+
+  pin = atoi (argv [2]) ;
+
+  mode = argv [3] ;
+
+  if ((fd = fopen ("/sys/class/gpio/export", "w")) == NULL)
+  {
+    fprintf (stderr, "%s: Unable to open GPIO export interface\n", argv [0]) ;
+    exit (1) ;
+  }
+
+  fprintf (fd, "%d\n", pin) ;
+  fclose (fd) ;
+
+  sprintf (fName, "/sys/class/gpio/gpio%d/direction", pin) ;
+  if ((fd = fopen (fName, "w")) == NULL)
+  {
+    fprintf (stderr, "%s: Unable to open GPIO direction interface for pin %d\n", argv [0], pin) ;
+    exit (1) ;
+  }
+
+  /**/ if (strcasecmp (mode, "in")   == 0)
+    fprintf (fd, "in\n") ;
+  else if (strcasecmp (mode, "out")  == 0)
+    fprintf (fd, "out\n") ;
   else
   {
-    if ((pin < 0) || (pin > NUM_PINS))
-    {
-      fprintf (stderr, "Pin number out of range\n") ;
-      exit (1) ;
-    }
+    fprintf (stderr, "%s: Invalid mode: %s. Should be in or out\n", argv [1], mode) ;
+    exit (1) ;
   }
+
+  fclose (fd) ;
 }
 
+
+/*
+ * doUnexport:
+ *	gpio unexport pin
+ *	This uses the /sys/class/gpio device interface.
+ *********************************************************************************
+ */
+
+void doUnexport (int argc, char *argv [])
+{
+  FILE *fd ;
+  int pin ;
+
+  if (argc != 3)
+  {
+    fprintf (stderr, "Usage: %s unexport pin\n", argv [0]) ;
+    exit (1) ;
+  }
+
+  pin = atoi (argv [2]) ;
+
+  if ((fd = fopen ("/sys/class/gpio/unexport", "w")) == NULL)
+  {
+    fprintf (stderr, "%s: Unable to open GPIO export interface\n", argv [0]) ;
+    exit (1) ;
+  }
+
+  fprintf (fd, "%d\n", pin) ;
+  fclose (fd) ;
+}
 
 /*
  * doMode:
@@ -107,7 +147,9 @@ void doMode (int argc, char *argv [])
   }
 
   pin = atoi (argv [2]) ;
-  pinCheck (pin) ;
+
+  if ((wpMode == WPI_MODE_PINS) && ((pin < 0) || (pin >= NUM_PINS)))
+    return ;
 
   mode = argv [3] ;
 
@@ -147,7 +189,9 @@ void doWrite (int argc, char *argv [])
   }
 
   pin = atoi (argv [2]) ;
-  pinCheck (pin) ;
+
+  if ((wpMode == WPI_MODE_PINS) && ((pin < 0) || (pin >= NUM_PINS)))
+    return ;
 
   val = atoi (argv [3]) ;
 
@@ -175,7 +219,12 @@ void doRead (int argc, char *argv [])
   }
 
   pin = atoi (argv [2]) ;
-  pinCheck (pin) ;
+
+  if ((wpMode == WPI_MODE_PINS) && ((pin < 0) || (pin >= NUM_PINS)))
+  {
+    printf ("0\n") ;
+    return ;
+  }
 
   val = digitalRead (pin) ;
 
@@ -200,7 +249,9 @@ void doPwm (int argc, char *argv [])
   }
 
   pin = atoi (argv [2]) ;
-  pinCheck (pin) ;
+
+  if ((wpMode == WPI_MODE_PINS) && ((pin < 0) || (pin >= NUM_PINS)))
+    return ;
 
   val = atoi (argv [3]) ;
 
@@ -244,20 +295,26 @@ int main (int argc, char *argv [])
     for (i = 2 ; i < argc ; ++i)
       argv [i - 1] = argv [i] ;
     --argc ;
-    gpioMode = TRUE ;
+    wpMode = WPI_MODE_GPIO ;
   }
+  else
+    wpMode = WPI_MODE_PINS ;
 
-  /**/ if (strcasecmp (argv [1], "write") == 0)
-    doWrite (argc, argv) ;
-  else if (strcasecmp (argv [1], "read" ) == 0)
-    doRead  (argc, argv) ;
-  else if (strcasecmp (argv [1], "mode" ) == 0)
-    doMode  (argc, argv) ;
-  else if (strcasecmp (argv [1], "pwm"  ) == 0)
-    doPwm   (argc, argv) ;
+  /**/ if (strcasecmp (argv [1], "write"   ) == 0)
+    doWrite  (argc, argv) ;
+  else if (strcasecmp (argv [1], "read"    ) == 0)
+    doRead   (argc, argv) ;
+  else if (strcasecmp (argv [1], "mode"    ) == 0)
+    doMode   (argc, argv) ;
+  else if (strcasecmp (argv [1], "pwm"     ) == 0)
+    doPwm    (argc, argv) ;
+  else if (strcasecmp (argv [1], "export"  ) == 0)
+    doExport (argc, argv) ;
+  else if (strcasecmp (argv [1], "unexport") == 0)
+    doUnexport (argc, argv) ;
   else
   {
-    fprintf (stderr, "%s: Unknown command: %s. (read/write/pwm/mode expected)\n", argv [0], argv [1]) ;
+    fprintf (stderr, "%s: Unknown command: %s. (read/write/pwm/mode/export/unexport expected)\n", argv [0], argv [1]) ;
     exit (1) ;
   }
   return 0 ;

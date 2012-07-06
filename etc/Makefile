@@ -3,7 +3,7 @@
 ##    All rights reserved.
 ##
 
-BASE=/mnt/piroot
+BASE=/mnt/raspiroot
 BASEETC=$(BASE)/etc
 
 FILES=  fstab                               \

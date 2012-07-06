@@ -8,8 +8,8 @@ set -e -u
 BDEVICE=/dev/sdb1
 RDEVICE=/dev/sdb2
 
-BMOUNT=/mnt/piboot
-RMOUNT=/mnt/piroot
+BMOUNT=/mnt/raspiboot
+RMOUNT=/mnt/raspiroot
 
 ADDITIONAL1="netbase,net-tools,ifupdown,iproute,openssh-server,ntp,ntpdate"
 ADDITIONAL2="vim-nox,less,sudo,tzdata,console-data,locales,tasksel,ca-certificates"

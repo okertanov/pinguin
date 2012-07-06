@@ -29,6 +29,7 @@ General Info
 ### Disk layout & partitions
     /dev/sdc1   FAT32(LBA)
     /dev/sdc2   Linux
+    /dev/sdc3   swap?
 
 ### Boot partition files
 * bootcode.bin : 2nd stage bootloader, starts with SDRAM disabled
@@ -46,9 +47,6 @@ General Info
 * arm128\_start.elf : 128M ARM, 128M GPU split (use this for heavy 3D work, possibly also required for some video decoding)
 * arm192\_start.elf : 192M ARM, 64M GPU split (this is the default)
 * arm224\_start.elf : 224M ARM, 32M GPU split (use this for Linux only with no 3D or video processing. Its enough for the 1080p framebuffer, but not much else)
-
-### Emulation
-    qemu-system-arm -kernel kernel-qemu -cpu arm1136-r2 -M versatilepb -no-reboot -append "root=/dev/sda2 panic=1" -hda debian6-19-04-2012.img -m 512
 
 
 Bootstrapping Debian
@@ -102,6 +100,7 @@ And then:
     cp ./boot/boot.rc      /mnt/raspiboot/
 
 #### Broadcom VC
+
     sudo /opt/vc/sbin/install_vmcs
     sudo update-rc.d vchiq defaults
     sudo update-rc.d vcfiled defaults
@@ -110,8 +109,6 @@ And then:
     See http://unicorn.drogon.net/vchiq
         http://elinux.org/Omxplayer
 
-#### Root /sd mountpoint
-
 #### Network / Wi-Fi
 Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
 
@@ -119,6 +116,10 @@ Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
     sudo aptitude install firmware-linux-nonfree firmware-realtek
     sudo aptitude install usbutils
     sudo aptitude install wireless-tools iw
+
+#### Root /sd mountpoint
+
+    sudo ln -s /boot /sd
 
 Links
 -----

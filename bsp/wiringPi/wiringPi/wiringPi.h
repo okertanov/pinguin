@@ -55,8 +55,9 @@ extern void digitalWrite      (int pin, int value) ;
 extern void pwmWrite          (int pin, int value) ;
 extern int  digitalRead       (int pin) ;
 
-extern void delay             (unsigned int howLong) ;
-extern void delayMicroseconds (unsigned int howLong) ;
+extern void         delay             (unsigned int howLong) ;
+extern void         delayMicroseconds (unsigned int howLong) ;
+extern unsigned int millis            (void) ;
 
 #ifdef __cplusplus
 }
