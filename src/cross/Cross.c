@@ -25,16 +25,20 @@
 */
 int main(int argc, char** argv)
 {
-    const char* exec_name = strdup(argv[0]);
-    const char* uname_fmt = "\n%s:\n\t%s\n\t\t%s : %s : %s : %s : %s : %s\n";
-    struct utsname uts = {0};
+    const char uname_fmt[] = "\n%s(%d) %s\n%s %s %s %s %s\n";
+    const int exec_pcount = argc;
+    char *exec_name = strdup(argv[0]);
+    struct utsname uts;
+
+    memset(&uts, 0, sizeof(uts));
 
     int rc = uname(&uts);
 
-    if ( rc == 0 && exec_name && uname_fmt )
+    if ( rc == 0 && exec_name )
     {
         fprintf( stdout,
-                 uname_fmt, exec_name, "System info:",
+                 uname_fmt, exec_name, exec_pcount,
+                 "System info:",
                  uts.sysname,
                  uts.nodename,
                  uts.release,
