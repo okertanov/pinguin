@@ -24,7 +24,19 @@ FILES=  fstab                               \
         apt/sources.list.d/raspbian.list    \
         apt/sources.list.d/raspi.list
 
-all: diff md5
+all: help
+
+help:
+	@echo
+	@echo "    This makefile is used to post-update Raspberry Pi Debian installation."
+	@echo
+	@echo "    To use: make <option>, where the options are:"
+	@echo "        md5     - generate checksum pairs for the local and $(BASEETC) files."
+	@echo "        diff    - generate diff for the local and $(BASEETC) files."
+	@echo "        install - populate local config to $(BASEETC)."
+	@echo "        clean   - clear installed (nothing for now)."
+	@echo "        help    - this help."
+	@echo
 
 diff:
 	@$(foreach item,$(FILES),              \
@@ -48,7 +60,7 @@ install:
 
 clean:
 
-.PHONY: all clean diff md5 install
+.PHONY: all clean diff md5 install help
 
 .SILENT: clean
 
