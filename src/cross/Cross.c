@@ -36,7 +36,7 @@
 char* get_platform_signature_posix()
 {
     const char const uname_fmt[] = "%s %s %s %s %s";
-    struct utsname uts = { {0}, {0}, {0}, {0}, {0} };
+    struct utsname uts = { {0}, {0}, {0}, {0}, {0}, {0} };
     char* buff = NULL;
     const size_t buf_num = sizeof(uname_fmt) + sizeof(uts.sysname) + sizeof(uts.nodename) +
                            sizeof(uts.release) + sizeof(uts.version) + sizeof(uts.machine);
