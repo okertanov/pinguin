@@ -49,7 +49,7 @@ CXX_CFLAGS=$(COMMON_CFLAGS) $(MARCH) -static -O3
 C_LDFLAGS=-lm
 CXX_LDFLAGS=-lm
 
-all: info $(TARGET) strip
+all: info $(TARGET)
 
 info:
 	-@echo "Building $(TARGET) on $(HOST_SYSTEM) for $(ARCH) using $(CROSS_COMPILE) toolchain."
