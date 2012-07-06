@@ -1,6 +1,14 @@
 ##    Copyright (C) 2012 Oleg Kertanov <okertanov@gmail.com>
 ##    All rights reserved.
 
+#
+# Usage:
+# 			make clean all
+# 			make clean all CROSS_COMPILE=""
+# 			make clean all CROSS_COMPILE="arm-linux-gnieabi-"
+# 			make clean all CROSS_COMPILE="ppc-unknown-gnieabi-"
+#
+
 TARGET=Cross
 
 SRC=Cross.c
@@ -22,10 +30,10 @@ OBJDUMP=$(CROSS_COMPILE)objdump
 RM=rm -f
 MV=mv
 
-MARCH_ARMV6=-DTARGET=raspi -march=armv6zk -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp
+MARCH_ARMV6=-DTARGET=raspi -march=armv6zk -mtune=arm1176jzf-s -mfloat-abi=softfp -mfpu=vfp
 MARCH_X86=-DTARGET=native -march=native -mtune=native
 
-ifeq ( $(CROSS_COMPILE), "")
+ifeq ($(CROSS_COMPILE),)
 ARCH:=native
 MARCH:=$(MARCH_X86)
 else
@@ -44,13 +52,13 @@ CXX_LDFLAGS=-lm
 all: info $(TARGET) strip
 
 info:
-	-@echo "Building $(TARGET) for $(ARCH) using $(CROSS_COMPILE) toolchain."
+	-@echo "Building $(TARGET) on $(HOST_SYSTEM) for $(ARCH) using $(CROSS_COMPILE) toolchain."
 
 $(TARGET): $(SRC)
 	$(CC) $(C_CFLAGS) $(C_LDFLAGS) $^ -o $@
 
 strip: $(TARGET)
-	$(STRIP) strip --strip-unneeded $<
+	$(STRIP) --strip-unneeded $<
 
 clean:
 	-@$(RM) -f $(TARGET) *.o *.a *.lib *.exe *.so

@@ -25,9 +25,9 @@
 */
 int main(int argc, char** argv)
 {
-    const char uname_fmt[] = "\n%s(%d) %s\n%s %s %s %s %s\n";
+    const char const uname_fmt[] = "%s(%d) %s\n%s %s %s %s %s\n";
     const int exec_pcount = argc;
-    char *exec_name = strdup(argv[0]);
+    char* const exec_name = strdup(argv[0]);
     struct utsname uts;
 
     memset(&uts, 0, sizeof(uts));
