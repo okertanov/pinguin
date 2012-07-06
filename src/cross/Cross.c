@@ -19,6 +19,9 @@
 #elif (defined _WIN32)
 #include <windows.h>
 #define get_platform_signature()    get_platform_signature_windows()
+#if (!defined snprintf)
+#define snprintf _snprintf
+#endif
 #endif
 
 #if (defined unix)
