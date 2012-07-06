@@ -38,25 +38,24 @@ help:
 	@echo "        help    - this help."
 	@echo
 
-diff:
+diff: $(FILES)
 	@$(foreach item,$(FILES),              \
 		diff -u $(BASEETC)/$(item) $(item);\
 	)
 
-md5:
+md5: $(FILES)
 	@$(foreach item,$(FILES),              \
 		md5sum $(BASEETC)/$(item) &&       \
 		md5sum $(item);\
 	)
 
-install:
+install: $(FILES)
 	@$(foreach item,$(FILES),              \
 		install -D -T -m644 $(item) $(BASEETC)/$(item) ;\
 	)
 	@chmod 755 $(BASEETC)/init.d/vchiq
 	@chmod 755 $(BASEETC)/init.d/vcfiled
 	@chmod 755 $(BASEETC)/rc.local
-
 
 clean:
 
