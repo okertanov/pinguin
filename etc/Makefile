@@ -3,40 +3,34 @@
 ##    All rights reserved.
 ##
 
-BASE=/mnt/raspiroot
-BASEETC=$(BASE)/etc
+BPART=/dev/sdb1
+RPART=/dev/sdb2
+BBASE=/mnt/raspiboot
+RBASE=/mnt/raspiroot
+BASEETC=$(RBASE)/etc
 
-FILES=  fstab                               \
-        host.conf                           \
-        hostname                            \
-        hosts                               \
-        rc.local                            \
-        resolv.conf                         \
-        modules                             \
-        init.d/vcfiled                      \
-        init.d/vchiq                        \
-        network/interfaces                  \
-        sysctl.d/raspi.conf                 \
-        ld.so.conf.d/vmcs.conf              \
-        modprobe.d/raspi-blacklist.conf     \
-        apt/sources.list                    \
-        apt/sources.list.d/qt5pi.list       \
-        apt/sources.list.d/raspbian.list    \
-        apt/sources.list.d/raspi.list
+FILES=$(shell find . -type f -not -name Makefile -print)
 
 all: help
 
 help:
-	@echo
-	@echo "    This makefile is used to post-update Raspberry Pi Debian installation."
-	@echo
-	@echo "    To use: make <option>, where the options are:"
-	@echo "        md5     - generate checksum pairs for the local and $(BASEETC) files."
-	@echo "        diff    - generate diff for the local and $(BASEETC) files."
-	@echo "        install - populate local config to $(BASEETC)."
-	@echo "        clean   - clear installed (nothing for now)."
-	@echo "        help    - this help."
-	@echo
+	-@echo
+	-@echo "    This makefile is used to post-update Raspberry Pi Debian installation."
+	-@echo
+	-@echo "    To use: make <option>, where the options are:"
+	-@echo "        mount   - mount target partitions: $(BBASE) and $(RBASE)"
+	-@echo "        umount  - umount target partitions: $(BBASE) and $(RBASE)"
+	-@echo "        md5     - generate checksum pairs for the local and $(BASEETC) files."
+	-@echo "        diff    - generate diff for the local and $(BASEETC) files."
+	-@echo "        install - populate local config to $(BASEETC)."
+	-@echo "        clean   - clear installed (nothing for now)."
+	-@echo "        help    - this help."
+	-@echo
+
+list:
+	-@echo
+	-@echo $(FILES)
+	-@echo
 
 diff: $(FILES)
 	@$(foreach item,$(FILES),              \
@@ -57,9 +51,17 @@ install: $(FILES)
 	@chmod 755 $(BASEETC)/init.d/vcfiled
 	@chmod 755 $(BASEETC)/rc.local
 
+mount:
+	mount $(BPART) $(BBASE)
+	mount $(RPART) $(RBASE)
+
+umount:
+	umount $(BPART)
+	umount $(RPART)
+
 clean:
 
-.PHONY: all clean diff md5 install help
+.PHONY: all clean diff md5 install mount umount help
 
 .SILENT: clean
 
