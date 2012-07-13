@@ -14,6 +14,7 @@ How to build the Cross sample for Raspberry Pi in Debian Squeeze
     file Cross
     qemu-arm ./Cross
     scp ./Cross pi@raspberry.lan:/home/pi/
+    ssh pi@raspberry.lan ./Cross
 
 
 How to build the Cross sample for native e.g. X86 platform
