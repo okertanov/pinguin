@@ -11,9 +11,9 @@ allow-hotplug eth0
 iface eth0 inet dhcp
 
 # Wireless network
-auto wlan0
-allow-hotplug wlan0
-iface wlan0 inet dhcp
-    wpa-ssid Nitra
-    wpa-psk
+#auto wlan0
+#allow-hotplug wlan0
+#iface wlan0 inet dhcp
+#    wpa-ssid Nitra
+#    wpa-psk
 
