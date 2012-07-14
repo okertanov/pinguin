@@ -121,6 +121,34 @@ Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
 
     sudo ln -s /boot /sd
 
+#### SMTP
+citadel-mta courier-mta dma esmtp-run exim4 exim4-daemon-heavy
+exim4-daemon-light lsb-invalid-mta masqmail msmtp-mta nullmailer postfix
+qmail-run sendmail-bin ssmtp xmail
+
+#### Sound
+    sudo aptitude install build-essential
+    sudo aptitude install screen
+    sudo aptitude install linux-sound-base alsa-utils mplayer
+    cd /opt/vc/src/hello_pi/hello_audio
+    make clean all
+    ./hello_audio.bin
+    sudo usermod -a -G audio pi
+    amixer cset numid=3 0
+    speaker-test
+    speaker-test -t wav
+    mplayer /usr/share/sounds/alsa/*.wav
+
+#### GSM/GPRS
+    sudo aptitude install gsm-utils
+    sudo gsmctl -d /dev/ttyACM0 all
+    sudo gsmctl -d /dev/ttyACM0 -o dial +37125864676
+    sudo gsmsendsms -d /dev/ttyACM0 +37125864676 "Hello from Raspberry Pi."
+    sudo vim /etc/default/gsm-utils
+
+#### Python
+    sudo aptitude install python
+
 Links
 -----
 [raspberrypi.org](http://www.raspberrypi.org/)
