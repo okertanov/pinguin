@@ -1,10 +1,55 @@
 #!/bin/sh -e
+
 #
-# boot.rc
+# @file boot.rc
+# @author Oleg Kertanov <okertanov@gmail.com>
+#
+
 #
 # In order to enable or disable this script just change the execution
-# bits.
+# bits (on the FAT fs? really?).
 #
-# By default this script does nothing.
+
+#
+# General section
+#
+script="/boot/boot.rc"
+logfile="/boot/boot.log"
+currtime=`date +"%d.%m.%Y %R"`
+
+#
+# Debug
+#
+#exec 2> $logfile 
+#exec 1>&2
+#set -x
+
+echo -n "" > $logfile
+echo "$script: Starting $script at $currtime, logging to $logfile" >> $logfile
+
+#
+# Send SMS via gsm-utils
+#
+modem="/dev/ttyACM0"   # USB mobile terminal.
+number="+37125864676"
+
+myhostname=`hostname`
+myip=`/sbin/ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'`
+message="Hello from $myhostname, I'm up and running. My IP: $myip"
+
+echo "$script: using the settings: $modem, $number, $myhostname, $myip" >> $logfile
+echo "$script: using the message:  $message" >> $logfile
+
+if [ -c "$modem" ]
+then
+  echo "$script: modem $modem exists." >> $logfile
+  echo "$script: USB $modem is connected, trying to send SMS notification." >> $logfile
+  ( /usr/bin/gsmsendsms -d /dev/ttyACM0 "$number" "$message" 2>&1 >> $logfile || true ) &
+else
+  echo "$script: modem $modem does not exists." >> $logfile
+fi
+
+echo "$script: done." >> $logfile
 
 exit 0
+
