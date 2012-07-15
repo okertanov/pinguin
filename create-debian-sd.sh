@@ -13,8 +13,9 @@ RMOUNT=/mnt/raspiroot
 
 ADDITIONAL1="netbase,net-tools,ifupdown,iproute,openssh-server,ntp,ntpdate"
 ADDITIONAL2="vim-nox,less,sudo,tzdata,console-data,locales,tasksel,ca-certificates"
-ADDITIONAL3="x-window-system-core,fluxbox"
-ADDITIONAL="$ADDITIONAL1,$ADDITIONAL2,$ADDITIONAL3"
+ADDITIONAL3="psmisc"
+ADDITIONAL4="x-window-system-core"
+ADDITIONAL="$ADDITIONAL1,$ADDITIONAL2,$ADDITIONAL3,$ADDITIONAL4"
 
 #
 # Make sure only root can run this script

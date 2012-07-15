@@ -27,9 +27,9 @@ General Info
 * PCB: 6 layers
 
 ### Disk layout & partitions
-    /dev/sdc1   FAT32(LBA)
-    /dev/sdc2   Linux
-    /dev/sdc3   swap?
+* /dev/sdc1    /dev/mmcblk0p1    FAT32(LBA)
+* /dev/sdc2    /dev/mmcblk0p2    Linux
+* /dev/sdc3    /dev/mmcblk0p3    swap?
 
 ### Boot partition files
 * bootcode.bin : 2nd stage bootloader, starts with SDRAM disabled
@@ -65,17 +65,19 @@ And then:
 #### Run thin on the target device:
 
     mount -oremount,rw /dev/sda2 /
+
     /debootstrap/debootstrap --second-stage
+    dpkg --configure -a
 
     aptitude update && aptitude dist-upgrade
     aptitude install -f
     aptitude clean && aptitude autoclean
 
+    sudo dpkg --get-selections '*'
+
     vim /etc/inittab
         #Spawn a getty on Raspberry Pi serial line
         T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100
-
-#### Other tasks to perform on the target:
 
     dpkg-reconfigure locales
     dpkg-reconfigure tzdata
@@ -84,10 +86,24 @@ And then:
 
     tasksel install standard
 
-    adduser pi
     update-alternatives --config editor
     update-rc.d ssh  defaults
     update-rc.d cron remove
+
+### Swap
+
+    sudo blkid
+    dd if=/dev/zero of=/var/swapfile bs=1024 count=524288
+    mkswap -L raspiswap /var/swapfile
+    swapon /var/swapfile
+    sudo vim /etc/fstab
+
+#### User
+
+    adduser pi
+    ssh-keygen -t dsa
+    ssh-copy-id -i .ssh/id_dsa.pub okertanov@chromebook
+    sudo vim /etc/sudoers
 
 #### Firmware, kernel and kernel modules
 @see https://github.com/raspberrypi/firmware
@@ -99,12 +115,17 @@ And then:
     cp ./boot/config.txt   /mnt/raspiboot/
     cp ./boot/boot.rc      /mnt/raspiboot/
 
+    sudo depmod -a
+
 #### Broadcom VC
+
+    sudo ln -s /boot /sd
 
     sudo /opt/vc/sbin/install_vmcs
     sudo update-rc.d vchiq defaults
     sudo update-rc.d vcfiled defaults
     /opt/vc/bin/vcgencmd version
+    /opt/vc/bin/tvservice -a
 
     See http://unicorn.drogon.net/vchiq
         http://elinux.org/Omxplayer
@@ -117,9 +138,16 @@ Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
     sudo aptitude install usbutils
     sudo aptitude install wireless-tools iw
 
-#### Root /sd mountpoint
+    sudo iwconfig
 
-    sudo ln -s /boot /sd
+#### X11
+Window Managers
+* fluxbox
+* matchbox
+* enlightenment
+
+    sudo aptitude install x-window-system-core
+    sudo aptitude install xnest xserver-xephyr
 
 #### SMTP
 citadel-mta courier-mta dma esmtp-run exim4 exim4-daemon-heavy
@@ -145,6 +173,7 @@ qmail-run sendmail-bin ssmtp xmail
     sudo gsmctl -d /dev/ttyACM0 -o dial +37125864676
     sudo gsmsendsms -d /dev/ttyACM0 +37125864676 "Hello from Raspberry Pi."
     sudo vim /etc/default/gsm-utils
+    sudo vim /etc/init.d/gsm-utils
 
 #### Python
     sudo aptitude install python
