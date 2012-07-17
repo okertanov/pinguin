@@ -5,12 +5,22 @@
 
 set -e -u
 
-BDEVICE=/dev/sdb1
-RDEVICE=/dev/sdb2
+#
+# Disk and partitions
+#
+DEVICE=/dev/sdb
+BDEVICE=${DEVICE}1
+RDEVICE=${DEVICE}2
 
+#
+# Destination mount points
+#
 BMOUNT=/mnt/raspiboot
 RMOUNT=/mnt/raspiroot
 
+#
+# Additional debootstrap packages to install
+#
 ADDITIONAL1="netbase,net-tools,ifupdown,iproute,openssh-server,ntp,ntpdate"
 ADDITIONAL2="vim-nox,less,sudo,tzdata,console-data,locales,tasksel,ca-certificates"
 ADDITIONAL3="psmisc,usbutils"
@@ -25,29 +35,37 @@ if [ "$(\id -u)" -ne "0" ]; then
    exit 1
 fi
 
-echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-echo "WARNING! It will erase your /dev/sdb (which is SD card on my system) so press Ctrl-C NOW to prevent this!"
-echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+echo "WARNING! It will erase your $DEVICE (which is SD card on my system) so press Ctrl-C NOW to prevent this!"
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 sleep 10
 echo "Starting..."
 
-ls /mnt
-
+echo "Umounting $BDEVICE"
 umount $BDEVICE
+
+echo "Umounting $RDEVICE"
 umount $RDEVICE
 
 if [ ! -d "$BMOUNT" ]; then
+    echo "Creating $BMOUNT"
     mkdir $BMOUNT
 fi
 
 if [ ! -d "$RMOUNT" ]; then
+    echo "Creating $RMOUNT"
     mkdir $RMOUNT
 fi
 
-echo cfdisk /dev/sdb
+echo You may cfdisk $DEVICE to initialize partitions for the first time.
+cfdisk $DEVICE
+partprobe $DEVICE
 
+echo "Creating FAT fs on the $BDEVICE"
+mkfs.vfat $BDEVICE -n "raspiboot"
 mlabel -i $BDEVICE ::"raspiboot"
 
+echo "Creating EXT4 fs on the $RDEVICE"
 mkfs.ext4 $RDEVICE
 tune2fs -m0 -L"raspiroot" $RDEVICE
 tune2fs -o journal_data_writeback $RDEVICE
@@ -55,26 +73,26 @@ fsck $RDEVICE
 
 sync
 
+echo "Mounting $BDEVICE"
 mount $BDEVICE $BMOUNT
+
+echo "Mounting $RDEVICE"
 mount $RDEVICE $RMOUNT
 
+echo "Bootstraping Debian Wheezy"
 /usr/sbin/debootstrap --foreign --arch armel \
     --include=$ADDITIONAL \
     wheezy $RMOUNT http://ftp.de.debian.org/debian/
 
-sync
-
-cp ./etc/hosts        $RMOUNT/etc/
-cp ./etc/hostname     $RMOUNT/etc/
-cp ./etc/resolv.conf  $RMOUNT/etc/
-cp ./etc/fstab        $RMOUNT/etc/
-cp ./etc/network/interfaces $RMOUNT/etc/network/
-cp ./etc/apt/sources.list   $RMOUNT/etc/apt/
-cp ./etc/init.d/vchiq $RMOUNT/etc/init.d/
+echo "Syncing /etc"
+make -C ./etc install
 
 sync
 
+echo "Umounting $BDEVICE"
 umount $BDEVICE
+
+echo "Umounting $RDEVICE"
 umount $RDEVICE
 
 echo "Done. See README.md for the post-config instructions."
