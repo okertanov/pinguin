@@ -1,3 +1,4 @@
-rootfs          /        rootfs     rw,noatime,nodiratime,data=writeback,barrier=0      0   0
-LABEL=RASPIBOOT /boot    auto       defaults    0   0
-proc            /proc    proc       defaults    0   0
+rootfs           /        rootfs     rw,noatime,nodiratime,data=writeback,barrier=0      0   0
+LABEL=RASPIBOOT  /boot    auto       defaults    0   0
+proc             /proc    proc       defaults    0   0
+/var/swapfile    none 	  swap       defaults    0   0
