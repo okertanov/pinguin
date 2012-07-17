@@ -42,8 +42,8 @@ OBJ	=	gpio.o
 all:		gpio
 
 gpio:	gpio.o
-	@echo [link]
-	$(CC) -o $@ gpio.o $(LDFLAGS) $(LIBS)
+	@echo [LD]
+	@$(CC) -o $@ gpio.o $(LDFLAGS) $(LIBS)
 	
 .c.o:
 	@echo [CC] $<

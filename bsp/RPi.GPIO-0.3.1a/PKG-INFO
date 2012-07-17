@@ -1,0 +1,98 @@
+Metadata-Version: 1.1
+Name: RPi.GPIO
+Version: 0.3.1a
+Summary: A class to control Raspberry Pi GPIO channels
+Home-page: http://code.google.com/p/raspberry-gpio-python/
+Author: Ben Croston
+Author-email: ben@croston.org
+License: MIT
+Description: This package provides a class to control the GPIO on a Raspberry Pi.
+        
+        Note that this module is unsuitable for real-time or timing critical applications.  This is because you
+        can not predict when Python will be busy garbage collecting.  It also runs under the Linux kernel which
+        is not suitable for real time applications - it is multitasking O/S and another process may be given
+        priority over the CPU, causing jitter in your program.  If you are after true real-time performance and
+        predictability, buy yourself an Arduino http://www.arduino.cc !
+        
+        Note that the current release does not support SPI, I2C, PWM or serial functionality on the RPi yet.
+        This is planned for the near future - watch this space!  One-wire functionality is also planned.
+        
+        Example Usage :
+        
+        ::
+        
+            import RPi.GPIO as GPIO
+        
+            # to use Raspberry Pi board pin numbers
+            GPIO.setmode(GPIO.BOARD)
+        
+            # set up GPIO output channel
+            GPIO.setup(12, GPIO.OUT)
+        
+            # set RPi board pin 12 high
+            GPIO.output(12, GPIO.HIGH)
+        
+            # set up GPIO input with pull-up control
+            #   (pull_up_down be PUD_OFF, PUD_UP or PUD_DOWN, default PUD_OFF)
+            GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        
+            # input from RPi board pin 11
+            input_value = GPIO.input(11)
+        
+            # to change to BCM GPIO numbering
+            GPIO.setmode(GPIO.BCM)
+        Change Log
+        ==========
+        0.3.1a
+        ------
+        - Fixed critical bug with swapped high/low state on outputs
+        - Added pull-up / pull-down setup functionality for inputs
+        
+        0.3.0a
+        ------
+        - Rewritten as a C extension
+        - Now uses /dev/mem and SoC registers instead of /sys/class/gpio
+        - Faster!
+        - Make call to GPIO.setmode() mandatory
+        - Added GPIO.HIGH and GPIO.LOW constants
+        
+        0.2.0
+        -----
+        - Changed status from alpha to beta
+        - Added setmode() to be able to use BCM GPIO 00.nn channel numbers
+        - Renamed InvalidPinException to InvalidChannelException
+        
+        0.1.0
+        ------
+        - Fixed direction bug
+        - Added MANIFEST.in (to include missing file)
+        - Changed GPIO channel number to pin number
+        - Tested and working!
+        
+        0.0.3a
+        ------
+        - Added GPIO table
+        - Refactored
+        - Fixed a few critical bugs
+        - Still completely untested!
+        
+        0.0.2a
+        ------
+        - Internal refactoring.  Still completely untested!
+        
+        0.0.1a
+        ------
+        - First version.  Completely untested until I can get hold of a Raspberry Pi!
+        
+        
+Keywords: Raspberry Pi GPIO
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Operating System :: POSIX :: Linux
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development
+Classifier: Topic :: Home Automation
+Classifier: Topic :: System :: Hardware

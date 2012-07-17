@@ -1,11 +1,7 @@
 /*
- * wiringPi:
- *	Arduino compatable (ish) Wiring library for the Raspberry Pi
+ * gpio.c:
+ *	Set-UID command-line interface to the Raspberry Pi's GPIO
  *	Copyright (c) 2012 Gordon Henderson
- *
- *	Thanks to code samples from Gert Jan van Loo and the
- *	BCM2835 ARM Peripherals manual, however it's missing
- *	the clock section /grr/mutter/
  ***********************************************************************
  * This file is part of wiringPi:
  *	https://projects.drogon.net/raspberry-pi/wiringpi/
@@ -25,12 +21,6 @@
  ***********************************************************************
  */
 
-/*
- * gpio.c:
- *	Command-line program to fiddle with the GPIO pins on the
- *	Raspberry Pi
- */
-
 #include <wiringPi.h>
 
 #include <stdio.h>
@@ -38,12 +28,96 @@
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 #include <sys/types.h>
+#include <fcntl.h>
+
+
+#define	VERSION	"1.0"
 
 static int wpMode ;
 
 
-char *usage = "Usage: gpio [-g] <read/write/pwm/mode> ..." ;
+char *usage = "Usage: gpio -v\n"
+              "       gpio [-g] <read/write/pwm/mode/> ...\n"
+	      "       gpio <export/unexport/exports> ..." ;
+
+
+/*
+ * doExports:
+ *	List all GPIO exports
+ *********************************************************************************
+ */
+
+void doExports (void)
+{
+  int fd ;
+  int i, l, first ;
+  char fName [128] ;
+  char dir, val ;
+
+// Rather crude, but who knows what others are up to...
+
+  for (first = 0, i = 0 ; i < 64 ; ++i)
+  {
+
+// Try to read the direction
+
+    sprintf (fName, "/sys/class/gpio/gpio%d/direction", i) ;
+    if ((fd = open (fName, O_RDONLY)) == -1)
+      continue ;
+
+    if (first == 0)
+    {
+      ++first ;
+      printf ("GPIO Pins exported:\n") ;
+    }
+
+    printf ("%4d: ", i) ;
+
+    if ((l = read (fd, &dir, 1)) == 0)
+    {
+      printf ("Empty direction file (why?)\n") ;
+      close (fd) ;
+      continue ;
+    }
+
+    /**/ if (dir == 'o')
+      printf ("Output ") ;
+    else if (dir == 'i')
+      printf ("Input  ") ;
+    else
+      printf ("Wrong  ") ;
+
+    close (fd) ;
+
+// Try to Read the value
+
+    sprintf (fName, "/sys/class/gpio/gpio%d/value", i) ;
+    if ((fd = open (fName, O_RDONLY)) == -1)
+    {
+      printf ("No Value file (huh?)\n") ;
+      continue ;
+    }
+
+    if ((l = read (fd, &val, 1)) == 0)
+    {
+      printf ("Empty Value file (why?)\n") ;
+      close (fd) ;
+      continue ;
+    }
+
+    /**/ if (val == '0' )
+      printf ("(0)\n") ;
+    else if (val == '1')
+      printf ("(1)\n") ;
+    else
+      printf ("(?)\n") ;
+
+    close (fd) ;
+  }
+}
+
 
 /*
  * doExport:
@@ -58,6 +132,8 @@ void doExport (int argc, char *argv [])
   int pin ;
   char *mode ;
   char fName [128] ;
+  uid_t uid ;
+  gid_t gid ;
 
   if (argc != 4)
   {
@@ -71,7 +147,7 @@ void doExport (int argc, char *argv [])
 
   if ((fd = fopen ("/sys/class/gpio/export", "w")) == NULL)
   {
-    fprintf (stderr, "%s: Unable to open GPIO export interface\n", argv [0]) ;
+    fprintf (stderr, "%s: Unable to open GPIO export interface: %s\n", argv [0], strerror (errno)) ;
     exit (1) ;
   }
 
@@ -81,7 +157,7 @@ void doExport (int argc, char *argv [])
   sprintf (fName, "/sys/class/gpio/gpio%d/direction", pin) ;
   if ((fd = fopen (fName, "w")) == NULL)
   {
-    fprintf (stderr, "%s: Unable to open GPIO direction interface for pin %d\n", argv [0], pin) ;
+    fprintf (stderr, "%s: Unable to open GPIO direction interface for pin %d: %s\n", argv [0], pin, strerror (errno)) ;
     exit (1) ;
   }
 
@@ -96,6 +172,19 @@ void doExport (int argc, char *argv [])
   }
 
   fclose (fd) ;
+
+// Change ownership so the current user can actually use it!
+
+  uid = getuid () ;
+  gid = getgid () ;
+
+  sprintf (fName, "/sys/class/gpio/gpio%d/value", pin) ;
+  if (chown (fName, uid, gid) != 0)
+  {
+    fprintf (stderr, "%s: Unable to change ownership of the value file: %s\n", argv [1], strerror (errno)) ;
+    exit (1) ;
+  }
+  
 }
 
 
@@ -281,24 +370,47 @@ int main (int argc, char *argv [])
     return 1 ;
   }
 
-  if (wiringPiSetup () == -1)
+  if (strcasecmp (argv [1], "-v") == 0)
   {
-    fprintf (stderr, "%s: Unable to initialise GPIO\n", argv [0]) ;
-    exit (1) ;
+    printf ("gpio version: %s\n", VERSION) ;
+    printf ("Copyright (c) 2012 Gordon Henderson\n") ;
+    printf ("This is free software with ABSOLUTELY NO WARRANTY.\n") ;
+    return 0 ;
   }
+
+// Initial test for /sys/class/gpio operations:
+
+  /**/ if (strcasecmp (argv [1], "exports" ) == 0)
+    { doExports () ;		return 0 ; }
+  else if (strcasecmp (argv [1], "export"  ) == 0)
+    { doExport (argc, argv) ;	return 0 ; }
+  else if (strcasecmp (argv [1], "unexport") == 0)
+    { doUnexport (argc, argv) ;	return 0 ; }
 
 // Check for -g argument
 
   if (strcasecmp (argv [1], "-g") == 0)
   {
-    wiringPiGpioMode (WPI_MODE_GPIO) ;
+    if (wiringPiSetupGpio () == -1)
+    {
+      fprintf (stderr, "%s: Unable to initialise GPIO in GPIO mode.\n", argv [0]) ;
+      exit (1) ;
+    }
+
     for (i = 2 ; i < argc ; ++i)
       argv [i - 1] = argv [i] ;
     --argc ;
     wpMode = WPI_MODE_GPIO ;
   }
   else
+  {
+    if (wiringPiSetup () == -1)
+    {
+      fprintf (stderr, "%s: Unable to initialise GPIO in wiringPi mode\n", argv [0]) ;
+      exit (1) ;
+    }
     wpMode = WPI_MODE_PINS ;
+  }
 
   /**/ if (strcasecmp (argv [1], "write"   ) == 0)
     doWrite  (argc, argv) ;
@@ -308,13 +420,9 @@ int main (int argc, char *argv [])
     doMode   (argc, argv) ;
   else if (strcasecmp (argv [1], "pwm"     ) == 0)
     doPwm    (argc, argv) ;
-  else if (strcasecmp (argv [1], "export"  ) == 0)
-    doExport (argc, argv) ;
-  else if (strcasecmp (argv [1], "unexport") == 0)
-    doUnexport (argc, argv) ;
   else
   {
-    fprintf (stderr, "%s: Unknown command: %s. (read/write/pwm/mode/export/unexport expected)\n", argv [0], argv [1]) ;
+    fprintf (stderr, "%s: Unknown command: %s. (read/write/pwm/mode expected)\n", argv [0], argv [1]) ;
     exit (1) ;
   }
   return 0 ;

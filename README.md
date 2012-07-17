@@ -184,7 +184,9 @@ Links
 
 [elinux.org/RPi_Advanced_Setup](http://elinux.org/RPi_Advanced_Setup)
 
-[http://elinux.org/RPi_Hardware](http://elinux.org/RPi_Hardware)
+[elinux.org/RPi_Hardware](http://elinux.org/RPi_Hardware)
+
+[elinux.org/RPi_Low-level_peripherals](http://elinux.org/RPi_Low-level_peripherals)
 
 [github.com/raspberrypi](https://github.com/raspberrypi)
 

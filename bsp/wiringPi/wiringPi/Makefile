@@ -35,9 +35,9 @@ LIBS    =
 # Should not alter anything below this line
 ###############################################################################
 
-SRC	=	wiringPi.c serial.c wiringShift.c
+SRC	=	wiringPi.c serial.c wiringShift.c lcd.c
 
-OBJ	=	wiringPi.o serial.o wiringShift.o
+OBJ	=	wiringPi.o serial.o wiringShift.o lcd.o
 
 all:		$(TARGET)
 
@@ -64,13 +64,16 @@ install:	$(TARGET)
 	@echo [install]
 	install -m 0755 -d /usr/local/lib
 	install -m 0755 -d /usr/local/include
-	install -m 0644 wiringPi.h /usr/local/include
-	install -m 0644 serial.h /usr/local/include
-	install -m 0644 wiringShift.h /usr/local/include
-	install -m 0644 libwiringPi.a /usr/local/lib
+	install -m 0644 wiringPi.h	/usr/local/include
+	install -m 0644 serial.h	/usr/local/include
+	install -m 0644 wiringShift.h	/usr/local/include
+	install -m 0644 lcd.h		/usr/local/include
+	install -m 0644 libwiringPi.a	/usr/local/lib
 
 uninstall:
 	@echo [uninstall]
+	rm -f /usr/local/include/lcd.h
+	rm -f /usr/local/include/wiringShift.h
 	rm -f /usr/local/include/wiringPi.h
 	rm -f /usr/local/lib/libwiringPi.a
 
@@ -81,3 +84,4 @@ uninstall:
 wiringPi.o: wiringPi.h
 serial.o: serial.h
 wiringShift.o: wiringPi.h wiringShift.h
+lcd.o: wiringPi.h lcd.h
