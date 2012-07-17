@@ -1,1 +1,1 @@
-RaspberryPi / Debian Wheezy / Pinguin 1.0
+Debian Wheezy / Raspberry Pi / Pinguin 1.0

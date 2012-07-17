@@ -84,8 +84,11 @@ echo "Bootstraping Debian Wheezy"
     --include=$ADDITIONAL \
     wheezy $RMOUNT http://ftp.de.debian.org/debian/
 
+echo "Syncing /boot"
+make -C ../boot install
+
 echo "Syncing /etc"
-make -C ./etc install
+make -C ../etc install
 
 sync
 
