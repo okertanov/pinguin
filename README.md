@@ -216,6 +216,9 @@ Links
 
 [E17 bodhilinux.com](http://www.bodhilinux.com/)
 
+[USB TTL Serial Cables](http://www.ftdichip.com/Products/Cables/USBTTLSerial.htm)
+
+[FTDI Basic Breakout - 3.3V](http://www.sparkfun.com/products/9873)
 
 Ideas
 -----
