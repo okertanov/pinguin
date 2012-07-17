@@ -14,7 +14,7 @@ RMOUNT=/mnt/raspiroot
 ADDITIONAL1="netbase,net-tools,ifupdown,iproute,openssh-server,ntp,ntpdate"
 ADDITIONAL2="vim-nox,less,sudo,tzdata,console-data,locales,tasksel,ca-certificates"
 ADDITIONAL3="psmisc"
-ADDITIONAL4="x-window-system-core"
+ADDITIONAL4="x-window-system-core,xserver-xephyr"
 ADDITIONAL="$ADDITIONAL1,$ADDITIONAL2,$ADDITIONAL3,$ADDITIONAL4"
 
 #

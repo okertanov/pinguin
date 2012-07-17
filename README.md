@@ -146,9 +146,6 @@ Window Managers
 * matchbox
 * enlightenment
 
-    sudo aptitude install x-window-system-core  
-    sudo aptitude install xnest xserver-xephyr  
-
 #### SMTP
 citadel-mta courier-mta dma esmtp-run exim4 exim4-daemon-heavy
 exim4-daemon-light lsb-invalid-mta masqmail msmtp-mta nullmailer postfix
