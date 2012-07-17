@@ -1,0 +1,3 @@
+[submodule "src/gsmlib/gsmlib.git"]
+	path = src/gsmlib/gsmlib.git
+	url = git@github.com:okertanov/gsmlib.git
