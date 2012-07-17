@@ -171,6 +171,14 @@ qmail-run sendmail-bin ssmtp xmail
     sudo vim /etc/default/gsm-utils
     sudo vim /etc/init.d/gsm-utils
 
+    cd gsmlib.git
+    sudo aptitude install debuild fakeroot debhelper chrpath
+    sudo  dpkg-buildpackage -rfakeroot -uc -b
+    ls -l ../
+    sudo aptitude purge gsm-utils libgsmme1c2a
+    sudo dpkg -i ../libgsmme1c2a_1.10-13.2_i386.deb ../gsm-utils_1.10-13.2_i386.deb
+
+
 #### Python
     sudo aptitude install python
 
