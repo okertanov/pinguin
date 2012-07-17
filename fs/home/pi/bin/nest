@@ -1,0 +1,5 @@
+#!/bin/sh
+
+#startx -- /usr/bin/X11/Xnest -full -geometry 1024x768
+startx -- /usr/bin/X11/Xephyr -screen 1024x768
+
