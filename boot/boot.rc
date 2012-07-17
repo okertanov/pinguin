@@ -20,7 +20,7 @@ currtime=`date +"%d.%m.%Y %R"`
 #
 # Debug
 #
-#exec 2> $logfile 
+#exec 2> $logfile
 #exec 1>&2
 #set -x
 
