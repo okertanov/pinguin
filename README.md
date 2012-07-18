@@ -55,11 +55,7 @@ Bootstrapping Debian
 ### Emulation
 Launch QEMU with the SD image:
 
-    qemu-system-arm -M versatilepb -cpu arm1136-r2 -hda /dev/sdb -kernel emulation/zImage-devtmpfs -m 192 -append "root=/dev/sda2 init=/bin/bash" -vga std -net nic -net user
-
-And then:
-
-    qemu-system-arm -M versatilepb -cpu arm1136-r2 -hda /dev/sdb -kernel emulation/zImage-devtmpfs -m 192 -append "root=/dev/sda2" -vga std -net nic -net user
+    ./emu/emu-arm.sh
 
 ### Post-config
 #### Run thin on the target device:
