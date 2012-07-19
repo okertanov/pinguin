@@ -131,7 +131,7 @@ Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
 
     sudo aptitude install firmware-linux firmware-linux-free
     sudo aptitude install firmware-linux-nonfree firmware-realtek
-    sudo aptitude install wireless-tools iw
+    sudo aptitude install wireless-tools iw wpasupplicant
 
     sudo iwconfig
 
