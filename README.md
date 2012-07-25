@@ -224,6 +224,8 @@ Links
 
 [FTDI Basic Breakout - 3.3V](http://www.sparkfun.com/products/9873)
 
+[github.com/dwelch67/raspberrypi](https://github.com/dwelch67/raspberrypi)
+
 Ideas
 -----
 * Media Player
