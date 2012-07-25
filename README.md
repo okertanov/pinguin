@@ -182,6 +182,9 @@ qmail-run sendmail-bin ssmtp xmail
 
 Links
 -----
+
+#### Software
+
 [raspberrypi.org](http://www.raspberrypi.org/)
 
 [element14.com/community/groups/raspberry-pi](http://www.element14.com/community/groups/raspberry-pi)
@@ -222,13 +225,18 @@ Links
 
 [E17 bodhilinux.com](http://www.bodhilinux.com/)
 
+[github.com/dwelch67/raspberrypi](https://github.com/dwelch67/raspberrypi)
+
+[Lambda Pi](https://gitorious.org/lambdapi)
+
+#### Hardware
+
 [USB TTL Serial Cables](http://www.ftdichip.com/Products/Cables/USBTTLSerial.htm)
 
 [FTDI Basic Breakout - 3.3V](http://www.sparkfun.com/products/9873)
 
-[github.com/dwelch67/raspberrypi](https://github.com/dwelch67/raspberrypi)
+[beagleboard.org/bone](http://beagleboard.org/bone)
 
-[Lambda Pi](https://gitorious.org/lambdapi)
 
 Ideas
 -----
