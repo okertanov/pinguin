@@ -101,6 +101,8 @@ Launch QEMU with the SD image:
     ssh-copy-id -i .ssh/id_dsa.pub okertanov@chromebook
     sudo vim /etc/sudoers
 
+    mkdir ~/.compose-cache
+
 #### Firmware, kernel and kernel modules
 @see https://github.com/raspberrypi/firmware
 
