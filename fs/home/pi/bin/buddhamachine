@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#
+# see http://www.fm3buddhamachine.com/v2/?page_id=29
+# for The Classic: All 9 Buddha Machine 1.0 loops. In uncompressed .WAV format,
+# and All nine Buddha Machine 2.0 loops in mp3 format
+#
+
+aplay ~/FM3/*
+
