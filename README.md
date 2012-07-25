@@ -226,6 +226,8 @@ Links
 
 [github.com/dwelch67/raspberrypi](https://github.com/dwelch67/raspberrypi)
 
+[Lambda Pi](https://gitorious.org/lambdapi)
+
 Ideas
 -----
 * Media Player
