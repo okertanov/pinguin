@@ -6,6 +6,11 @@
 set -e -u
 
 #
+# Architecture
+#
+ARCH=armhf # or armel
+
+#
 # Disk and partitions
 #
 DEVICE=/dev/sdb
@@ -80,7 +85,7 @@ echo "Mounting $RDEVICE"
 mount $RDEVICE $RMOUNT
 
 echo "Bootstraping Debian Wheezy"
-/usr/sbin/debootstrap --foreign --arch armel \
+/usr/sbin/debootstrap --foreign --arch $ARCH \
     --include=$ADDITIONAL \
     wheezy $RMOUNT http://ftp.de.debian.org/debian/
 
