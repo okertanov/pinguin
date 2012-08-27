@@ -8,7 +8,7 @@ set -e -u
 #
 # Architecture
 #
-ARCH=armhf # or armel
+ARCH=armel # armhf or armel
 
 #
 # Disk and partitions
@@ -29,8 +29,7 @@ RMOUNT=/mnt/raspiroot
 ADDITIONAL1="netbase,net-tools,ifupdown,iproute,openssh-server,ntp,ntpdate"
 ADDITIONAL2="vim-nox,less,sudo,tzdata,console-data,locales,tasksel,ca-certificates"
 ADDITIONAL3="psmisc,usbutils"
-ADDITIONAL4="x-window-system-core,xserver-xephyr"
-ADDITIONAL="$ADDITIONAL1,$ADDITIONAL2,$ADDITIONAL3,$ADDITIONAL4"
+ADDITIONAL="$ADDITIONAL1,$ADDITIONAL2,$ADDITIONAL3"
 
 #
 # Make sure only root can run this script
@@ -47,10 +46,10 @@ sleep 10
 echo "Starting..."
 
 echo "Umounting $BDEVICE"
-umount $BDEVICE
+umount $BDEVICE || true
 
 echo "Umounting $RDEVICE"
-umount $RDEVICE
+umount $RDEVICE || true
 
 if [ ! -d "$BMOUNT" ]; then
     echo "Creating $BMOUNT"
@@ -64,7 +63,7 @@ fi
 
 echo You may cfdisk $DEVICE to initialize partitions for the first time.
 cfdisk $DEVICE
-partprobe $DEVICE
+blockdev --rereadpt $DEVICE
 
 echo "Creating FAT fs on the $BDEVICE"
 mkfs.vfat $BDEVICE -n "raspiboot"

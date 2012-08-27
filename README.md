@@ -55,7 +55,8 @@ Bootstrapping Debian
 ### Emulation
 Launch QEMU with the SD image:
 
-    ./emu/emu-arm.sh
+    ./emu/emu-arm.sh single
+    ./emu/emu-arm.sh multi
 
 ### Post-config
 #### Run thin on the target device:
@@ -138,6 +139,9 @@ Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
     sudo iwconfig
 
 #### X11
+
+    sudo aptitude install x-window-system-core xserver-xephyr
+
 Window Managers
 * fluxbox
 * matchbox
@@ -149,8 +153,6 @@ exim4-daemon-light lsb-invalid-mta masqmail msmtp-mta nullmailer postfix
 qmail-run sendmail-bin ssmtp xmail
 
 #### Sound
-    sudo aptitude install build-essential
-    sudo aptitude install screen
     sudo aptitude install linux-sound-base alsa-utils mplayer
     cd /opt/vc/src/hello_pi/hello_audio
     make clean all
@@ -179,6 +181,13 @@ qmail-run sendmail-bin ssmtp xmail
 
 #### Python
     sudo aptitude install python
+
+### Useful packages
+
+* screen
+* vim-nox
+* git-core
+* build-essential
 
 Links
 -----
