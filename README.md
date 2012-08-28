@@ -218,6 +218,8 @@ Links
 
 [debian.org/ports/arm](http://www.debian.org/ports/arm/)
 
+[wiki.debian.org/ArmHardFloatPort](http://wiki.debian.org/ArmHardFloatPort/)
+
 [openembedded.org](http://www.openembedded.org/)
 
 [scratchbox.org](http://www.scratchbox.org/)
