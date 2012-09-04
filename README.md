@@ -236,7 +236,7 @@ Links
 
 [E17 bodhilinux.com](http://www.bodhilinux.com/)
 
-[github.com/dwelch67/raspberrypi](https://github.com/dwelch67/raspberrypi)
+[Raspberry Pi ARM based bare metal examples](https://github.com/dwelch67/raspberrypi)
 
 [Lambda Pi](https://gitorious.org/lambdapi)
 
