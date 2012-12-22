@@ -140,7 +140,7 @@ Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
 
 #### X11
 
-    sudo aptitude install x-window-system-core xserver-xephyr
+    sudo aptitude install x-window-system-core xserver-xephyr xserver-xorg-video-fbdev xserver-xorg-video-vesa xserver-xfbdev
 
 Window Managers
 * fluxbox
@@ -158,7 +158,18 @@ qmail-run sendmail-bin ssmtp xmail
     make clean all
     ./hello_audio.bin
     sudo usermod -a -G audio pi
-    amixer cset numid=3 0
+    amixer cset numid=3 0 # where n is 0=auto, 1=headphones, 2=hdmi.
+    sudo vim /etc/asound.conf
+        pcm.!default {
+            type hw
+            card 0
+        }
+
+        ctl.!default {
+            type hw
+            card 0
+        }
+
     speaker-test
     speaker-test -t wav
     mplayer /usr/share/sounds/alsa/*.wav
@@ -177,6 +188,16 @@ qmail-run sendmail-bin ssmtp xmail
     ls -l ../
     sudo aptitude purge gsm-utils libgsmme1c2a
     sudo dpkg -i ../libgsmme1c2a_1.10-13.2_i386.deb ../gsm-utils_1.10-13.2_i386.deb
+
+#### Node.JS
+    git clone git://github.com/joyent/node.git node.git
+    cd node.git
+    CFLAGS="-march=armv6j" CCFLAGS="-march=armv6j" CXXFLAGS="-march=armv6j" ./configure --prefix=./stage
+    CFLAGS="-march=armv6j" CCFLAGS="-march=armv6j" CXXFLAGS="-march=armv6j" make install
+    sudo mv stage /opt/node.js
+    sudo vim /opt/node.js/bin/npm
+    sudo mkdir /srv/www
+    sudo touch /srv/www/server.js
 
 
 #### Python
@@ -238,7 +259,14 @@ Links
 
 [Raspberry Pi ARM based bare metal examples](https://github.com/dwelch67/raspberrypi)
 
+[Experimenting with bare metal coding on a Raspberry Pi](https://github.com/brianwiddas/pi-baremetal)
+
+[Baking Pi - Operating Systems Development](http://www.cl.cam.ac.uk/freshers/raspberrypi/tutorials/os/)
+
 [Lambda Pi](https://gitorious.org/lambdapi)
+
+[Raspberry Pi webcam + ffserve](http://jeremyblythe.blogspot.co.uk/2012/05/raspberry-pi-webcam.html)
+
 
 #### Hardware
 
@@ -247,6 +275,8 @@ Links
 [FTDI Basic Breakout - 3.3V](http://www.sparkfun.com/products/9873)
 
 [beagleboard.org/bone](http://beagleboard.org/bone)
+
+[Samsung Exynos 5 Dual Arndale Board](http://www.arndaleboard.org/wiki/index.php/Main_Page)
 
 
 Ideas
