@@ -21,6 +21,8 @@
 #   @see    http://crosstool-ng.org/
 #           and
 #           http://okertanov.github.com/2012/12/24/osx-crosstool-ng
+#           and
+#           https://raw.github.com/okertanov/pinguin/master/src/toolchains/build-with-ct-ng.sh
 #
 
 set -e -u
