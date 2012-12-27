@@ -267,6 +267,8 @@ Links
 
 [Raspberry Pi webcam + ffserve](http://jeremyblythe.blogspot.co.uk/2012/05/raspberry-pi-webcam.html)
 
+[github.com/xbianonpi/xbian](https://github.com/xbianonpi/xbian)
+
 
 #### Hardware
 
