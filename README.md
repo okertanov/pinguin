@@ -273,6 +273,8 @@ Links
 
 [Steps to make a Raspberry Pi Supercomputer](http://www.southampton.ac.uk/~sjc/raspberrypi/)
 
+[Hacking a Raspberry Pi into a wireless airplay speaker](http://jordanburgess.com/post/38986434391/raspberry-pi-airplay)
+
 
 #### Hardware
 
