@@ -269,6 +269,8 @@ Links
 
 [github.com/xbianonpi/xbian](https://github.com/xbianonpi/xbian)
 
+[Building a Raspberry Pi Cluster ](http://blog.afkham.org/2013/01/raspberry-pi-control-center.html)
+
 
 #### Hardware
 
