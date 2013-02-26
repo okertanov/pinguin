@@ -62,9 +62,12 @@ Launch QEMU with the SD image:
 #### Run thin on the target device:
 
     mount -oremount,rw /dev/sda2 /
+    mount /proc
 
     /debootstrap/debootstrap --second-stage
     dpkg --configure -a
+
+    passwd
 
     aptitude update && aptitude dist-upgrade
     aptitude install -f
