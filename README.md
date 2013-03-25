@@ -275,6 +275,8 @@ Links
 
 [Hacking a Raspberry Pi into a wireless airplay speaker](http://jordanburgess.com/post/38986434391/raspberry-pi-airplay)
 
+[github.com: RaspberryPi-BuildRoot](https://github.com/nezticle/RaspberryPi-BuildRoot)
+
 
 #### Hardware
 
@@ -285,6 +287,10 @@ Links
 [beagleboard.org/bone](http://beagleboard.org/bone)
 
 [Samsung Exynos 5 Dual Arndale Board](http://www.arndaleboard.org/wiki/index.php/Main_Page)
+
+[Turning the Raspberry Pi Into an FM Transmitter](http://www.icrobotics.co.uk/wiki/index.php/Turning_the_Raspberry_Pi_Into_an_FM_Transmitter)
+
+[CEC stands for Consumer Electronics Control](http://wiki.xbmc.org/index.php?title=CEC)
 
 
 Ideas
