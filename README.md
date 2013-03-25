@@ -62,9 +62,12 @@ Launch QEMU with the SD image:
 #### Run thin on the target device:
 
     mount -oremount,rw /dev/sda2 /
+    mount /proc
 
     /debootstrap/debootstrap --second-stage
     dpkg --configure -a
+
+    passwd
 
     aptitude update && aptitude dist-upgrade
     aptitude install -f
@@ -219,13 +222,15 @@ Links
 
 [element14.com/community/groups/raspberry-pi](http://www.element14.com/community/groups/raspberry-pi)
 
-[elinux.org/R-Pi_Hub](http://elinux.org/R-Pi_Hub)
+[elinux.org Development Platforms](http://elinux.org/Development_Platforms)
 
-[elinux.org/RPi_Advanced_Setup](http://elinux.org/RPi_Advanced_Setup)
+[elinux.org R-Pi Hub](http://elinux.org/R-Pi_Hub)
 
-[elinux.org/RPi_Hardware](http://elinux.org/RPi_Hardware)
+[elinux.org RPi Advanced Setup](http://elinux.org/RPi_Advanced_Setup)
 
-[elinux.org/RPi_Low-level_peripherals](http://elinux.org/RPi_Low-level_peripherals)
+[elinux.org RPi Hardware](http://elinux.org/RPi_Hardware)
+
+[elinux.org RPi Low-level peripherals](http://elinux.org/RPi_Low-level_peripherals)
 
 [github.com/raspberrypi](https://github.com/raspberrypi)
 
