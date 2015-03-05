@@ -216,6 +216,11 @@ qmail-run sendmail-bin ssmtp xmail
 Links
 -----
 
+### New 2015
+[http://blog.biicode.com/raspberry-pi-2-in-depth-biicode/](http://blog.biicode.com/raspberry-pi-2-in-depth-biicode/)
+
+[http://wiringpi.com/](http://wiringpi.com/)
+
 #### Software
 
 [raspberrypi.org](http://www.raspberrypi.org/)
@@ -331,4 +336,3 @@ Ideas
 * SCADA, Sensors monitoring service & web notify
 * Mail client/robot via fetchmail/procmail
 * Weather station
-
