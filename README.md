@@ -213,6 +213,22 @@ qmail-run sendmail-bin ssmtp xmail
 * git-core
 * build-essential
 
+### RaspberryPi + VNC/RDP
+[My Raspberry Pi Experience: Setting Up VNC](http://myraspberrypiexperience.blogspot.com/p/setting-up-vnc.html?m=1)  
+[Setting-Up Raspberry Pi for Headless Mode with X11VNC](https://codechief.wordpress.com/2013/07/17/setting-up-raspberry-pi-for-headless-mode-with-x11vnc/)  
+[Documentation: VNC VIRTUAL NETWORK COMPUTING](http://www.raspberrypi.org/documentation/remote-access/vnc/)  
+[Vncserver - ArchWiki](https://wiki.archlinux.org/index.php/vncserver)  
+
+[Chicken of the VNC](http://sourceforge.net/projects/cotvnc/)  
+[Chicken VNC](http://sourceforge.net/projects/chicken/)  
+[leonliu/NPDesktop](https://github.com/leonliu/NPDesktop)  
+[vnsea - VNC client for the iPhone and iPod Touch](https://code.google.com/p/vnsea/)  
+[apenwarr/cotvnc](https://github.com/apenwarr/cotvnc)  
+[LibVNC/x11vnc](https://github.com/LibVNC/x11vnc)  
+
+[xrdp](http://www.xrdp.org/)  
+[FreeRDP/FreeRDP](https://github.com/FreeRDP/FreeRDP)  
+
 Links
 -----
 
