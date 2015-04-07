@@ -55,8 +55,8 @@ Bootstrapping Debian
 ### Emulation
 Launch QEMU with the SD image:
 
-    ./emu/emu-arm.sh single
-    ./emu/emu-arm.sh multi
+    ./emu-arm.sh single
+    ./emu-arm.sh multi
 
 ### Post-config
 #### Run thin on the target device:
@@ -236,6 +236,8 @@ Links
 [http://blog.biicode.com/raspberry-pi-2-in-depth-biicode/](http://blog.biicode.com/raspberry-pi-2-in-depth-biicode/)
 
 [http://wiringpi.com/](http://wiringpi.com/)
+
+[https://wiki.ubuntu.com/Kernel/Dev/QemuARMVexpress](https://wiki.ubuntu.com/Kernel/Dev/QemuARMVexpress)
 
 #### Software
 
