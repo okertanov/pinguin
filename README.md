@@ -213,6 +213,14 @@ qmail-run sendmail-bin ssmtp xmail
 * git-core
 * build-essential
 
+### Discovering a device
+
+    arp -a
+    ping 192.168.1.255
+    nmap -sP 192.168.1.1/24
+    networksetup -listallhardwareports
+
+
 ### RaspberryPi + VNC/RDP
 [My Raspberry Pi Experience: Setting Up VNC](http://myraspberrypiexperience.blogspot.com/p/setting-up-vnc.html?m=1)  
 [Setting-Up Raspberry Pi for Headless Mode with X11VNC](https://codechief.wordpress.com/2013/07/17/setting-up-raspberry-pi-for-headless-mode-with-x11vnc/)  
