@@ -220,6 +220,11 @@ qmail-run sendmail-bin ssmtp xmail
     nmap -sP 192.168.1.1/24
     networksetup -listallhardwareports
 
+    sudo aptitude install avahi-daemon avahi-discover
+    dns-sd -B _ssh._tcp
+
+    open /System/Library/CoreServices/Network\ Diagnostics.app
+
 
 ### RaspberryPi + VNC/RDP
 [My Raspberry Pi Experience: Setting Up VNC](http://myraspberrypiexperience.blogspot.com/p/setting-up-vnc.html?m=1)  
