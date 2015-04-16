@@ -220,7 +220,7 @@ qmail-run sendmail-bin ssmtp xmail
     nmap -sP 192.168.1.1/24
     networksetup -listallhardwareports
 
-    sudo aptitude install avahi-daemon avahi-discover avahi-utils libnss-mdns
+    sudo aptitude install avahi-daemon avahi-discover avahi-utils avahi-dnsconfd libnss-mdns
     avahi-browse -alr
     dns-sd -B _ssh._tcp
 
